@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.datasets import make_blobs, fetch_openml
+from sklearn.datasets import make_blobs, load_digits
 from sklearn.preprocessing import StandardScaler
 
 # ==========================================
@@ -109,6 +109,7 @@ def run_comparison(X, k, n_trials=30, title="Experiment"):
     axes[1].set_ylabel('Inertia')
 
     plt.tight_layout()
+    plt.savefig(f"{title}.png", dpi=150)
     plt.show()
 
     # ==================================
@@ -139,9 +140,10 @@ if __name__ == "__main__":
     print("\n--- MNIST DATASET ---")
     print("Loading MNIST...")
 
-    mnist = fetch_openml('mnist_784', version=1, as_frame=False)
-    X_mnist = mnist.data[:2000]
+    digits = load_digits()
 
-    X_mnist = StandardScaler().fit_transform(X_mnist)
+X_mnist = digits.data
 
-    run_comparison(X_mnist, k=10, n_trials=10, title="MNIST Dataset")
+X_mnist = StandardScaler().fit_transform(X_mnist)
+
+run_comparison(X_mnist, k=10, n_trials=10, title="MNIST Dataset")
